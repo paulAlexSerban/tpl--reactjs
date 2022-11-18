@@ -1,0 +1,69 @@
+---
+name: CI Dev ReactJS
+
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    name: DEV Merge PullRequest
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 checkout repository"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: "Get npm cache directory"
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+
+      - name: "Cache npm modules"
+        uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+           ${{ runner.os }}-node-
+
+      - name: "🔧 Setup NodeJS 14.20.1"
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.20.1
+
+      - name: "🔧 Install latest NPM"
+        run: npm i -g npm@latest
+
+      - name: "📦  Install CI deps"
+        run: npm run install:ci
+
+      - name: "📦  Install ReactJS deps"
+        run: bash scripts/frontend/reactjs/install.bash
+
+      # - name: Upload Test Coverage
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: code-coverage
+      #     path: frontend/reactjs/coverage
+
+      # - name: Check Project
+      #   run: |
+      #     npm run formats:check
+      #     npm run test
+      #   env:
+      #     CI: true
+
+      # - name: Build Project
+      #   if: github.event_name == 'push'
+      #   run: bash scripts/frontend/reactjs/build.bash
+
+      # - name: Upload Build Folder
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: code-coverage
+      #     path: frontend/reactjs/build
