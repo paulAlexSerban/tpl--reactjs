@@ -63,7 +63,8 @@ jobs:
         run: bash scripts/frontend/reactjs/build.bash
 
       - name: "Upload Build Folder"
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v1
         with:
-          name: code-coverage
+          name: build
           path: frontend/reactjs/build/
