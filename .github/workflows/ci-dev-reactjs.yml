@@ -45,25 +45,25 @@ jobs:
       - name: "📦  Install ReactJS deps"
         run: bash scripts/frontend/reactjs/install.bash
 
-      # - name: Upload Test Coverage
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: code-coverage
-      #     path: frontend/reactjs/coverage
+      - name: "Check Project"
+        run: |
+          npm run formats:check
+          npm run test
+        env:
+          CI: true
 
-      # - name: Check Project
-      #   run: |
-      #     npm run formats:check
-      #     npm run test
-      #   env:
-      #     CI: true
+      - name: "Upload Test Coverage"
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: frontend/reactjs/coverage
 
-      # - name: Build Project
-      #   if: github.event_name == 'push'
-      #   run: bash scripts/frontend/reactjs/build.bash
+      - name: "Build Project"
+        if: github.event_name == 'push'
+        run: bash scripts/frontend/reactjs/build.bash
 
-      # - name: Upload Build Folder
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: code-coverage
-      #     path: frontend/reactjs/build
+      - name: "Upload Build Folder"
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: frontend/reactjs/build
