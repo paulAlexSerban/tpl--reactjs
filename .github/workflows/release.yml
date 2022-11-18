@@ -15,27 +15,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "🔄  Cache node_modules"
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-           ${{ runner.os }}-node-
+      # - name: "🔄  Cache node_modules"
+      # - uses: actions/cache@v3
+      #   id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+      #   with:
+      #     path: ${{ steps.npm-cache-dir.outputs.dir }}
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #      ${{ runner.os }}-node-
 
-      - name: "🔧 Setup NodeJS 14.20.1"
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.20.1
+      # - name: "🔧 Setup NodeJS 14.20.1"
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 14.20.1
 
-      - name: "🔧 Install npm@latest"
-        run: npm i -g npm@latest
+      # - name: "🔧 Install npm@latest"
+      #   run: npm i -g npm@latest
 
-      - name: "📦  Install CI dependencies"
-        run: npm run install:ci
+      # - name: "📦  Install CI dependencies"
+      #   run: npm run install:ci
 
-      - name: "🚀 Create Release"
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: "🚀 Create Release"
+      #   run: npx semantic-release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
