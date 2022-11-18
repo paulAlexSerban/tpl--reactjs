@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'Error: TESTS not specified'",
+    "test": "bash scripts/frontend/reactjs/test-ci.bash",
     "lint": "echo 'Error: LINTERS not specified'",
     "install:ci": "npm ci --omit=dev --ignore-scripts",
     "install:root": "npm install",
