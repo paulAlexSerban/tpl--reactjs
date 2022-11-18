@@ -17,6 +17,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: "🔍  Verify Changed ReactJS Files"
+        uses: tj-actions/changed-files@v23.1
+        id: changed-reactjs-files
+        with:
+          files: |
+              frontend/reactjs/**/*
+
+      - name: "List all changed files"
+        run: |
+          for file in ${{ steps.changed-reactjs-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+
       - name: "Get npm cache directory"
         id: npm-cache-dir
         run: |
