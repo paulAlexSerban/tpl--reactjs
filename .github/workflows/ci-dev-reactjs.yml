@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "🔍  Verify Changed ReactJS Files"
+      - name: "🔍  Verify Changes ReactJS Files"
         uses: tj-actions/changed-files@v23.1
         id: changed-reactjs-files
         with:
@@ -31,11 +31,13 @@ jobs:
           done
 
       - name: "Get npm cache directory"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         id: npm-cache-dir
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
 
       - name: "Cache npm modules"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         uses: actions/cache@v3
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
@@ -45,20 +47,25 @@ jobs:
            ${{ runner.os }}-node-
 
       - name: "🔧 Setup NodeJS 14.20.1"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         uses: actions/setup-node@v1
         with:
           node-version: 14.20.1
 
       - name: "🔧 Install latest NPM"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: npm i -g npm@latest
 
       - name: "📦  Install CI deps"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: npm run install:ci
 
       - name: "📦  Install ReactJS deps"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: bash scripts/frontend/reactjs/install.bash
 
       - name: "Check Project"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: |
           npm run formats:check
           npm run test
@@ -66,17 +73,18 @@ jobs:
           CI: true
 
       - name: "Upload Test Coverage"
+        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage
           path: frontend/reactjs/coverage/
 
       - name: "Build Project"
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: bash scripts/frontend/reactjs/build.bash
 
       - name: "Upload Build Folder"
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.changed-reactjs-files.outputs.any_changed == 'true'
         uses: actions/upload-artifact@v1
         with:
           name: build
