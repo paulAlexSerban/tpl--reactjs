@@ -79,7 +79,7 @@ jobs:
           name: code-coverage
           path: frontend/reactjs/coverage/
 
-      - name: "Build Project"
+      - name: "🏗️ Build Project"
         if: github.event_name == 'push' && steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: bash scripts/frontend/reactjs/build.bash
 
