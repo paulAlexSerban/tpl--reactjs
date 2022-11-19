@@ -3,9 +3,9 @@ name: CI Dev ReactJS
 
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, release]
   push:
-    branches: [develop]
+    branches: [develop, release]
 
 jobs:
   build:
@@ -48,7 +48,7 @@ jobs:
 
       - name: "🔧 Setup NodeJS 14.20.1"
         if: steps.changed-reactjs-files.outputs.any_changed == 'true'
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.20.1
 
