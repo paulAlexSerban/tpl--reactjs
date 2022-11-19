@@ -13,13 +13,11 @@ jobs:
           fetch-depth: 0
 
       - name: "Get npm cache directory"
-        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         id: npm-cache-dir
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
 
       - name: "Cache npm modules"
-        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         uses: actions/cache@v3
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
@@ -37,11 +35,9 @@ jobs:
         run: npm i -g npm@latest
 
       - name: "📦  Install ReactJS deps"
-        if: steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: bash scripts/frontend/reactjs/install.bash
 
       - name: "🏗️ Build Project"
-        if: github.event_name == 'push' && steps.changed-reactjs-files.outputs.any_changed == 'true'
         run: bash scripts/frontend/reactjs/build.bash
 
       - name: "🚚  Package"
