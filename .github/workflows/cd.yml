@@ -48,6 +48,6 @@ jobs:
       - name: "🚀 Deploy ReactJS to Gh-Pages"
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
-          branch: gh-pages-static-website
+          branch: gh-pages-reactjs
           folder: package/reactjs
 
