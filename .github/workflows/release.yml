@@ -1,5 +1,5 @@
 ---
-name: Release
+name: CD - Release
 on:
     push:
       branches:
@@ -9,30 +9,28 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      NODE_VERSION: 16.20.1
+      SITE_URL: https://paulalexserban.github.io/prj--personal-portfolio
     steps:
       - name: "📥 checkout repository"
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: "Get npm cache directory"
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-
-      - name: "Cache npm modules"
-        uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+  
+      - name: "🔄  Cache node_modules"
+        uses: actions/cache@v2
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: |
+            ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-           ${{ runner.os }}-node-
+            ${{ runner.os }}-node-
 
-      - name: "🔧 Setup NodeJS 16.20.1"
-        uses: actions/setup-node@v3
+      - name: "🔧 Setup NodeJS ${{ env.NODE_VERSION }}"
+        uses: actions/setup-node@v1
         with:
-          node-version: 16.20.1
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: "🔧 Install npm@latest"
         run: npm i -g npm@latest
