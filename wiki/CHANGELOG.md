@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/paulAlexSerban/tpl--reactjs/compare/v1.1.0...v1.1.1) (2023-09-01)
+
+
+### Bug Fixes
+
+* typos ([8da7243](https://github.com/paulAlexSerban/tpl--reactjs/commit/8da72434ae700c2c4146b0ddaac9ad424e12f879))
+
 # [1.1.0](https://github.com/paulAlexSerban/tpl--reactjs/compare/v1.0.0...v1.1.0) (2023-09-01)
 
 
