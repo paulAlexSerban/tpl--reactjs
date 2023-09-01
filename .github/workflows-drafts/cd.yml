@@ -1,13 +1,10 @@
----
-name: Release
+name: CD
 on:
-    push:
-      branches:
-        - release
+  workflow_dispatch:
 
 jobs:
-  release:
-    name: Release
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: "📥 checkout repository"
@@ -29,18 +26,28 @@ jobs:
           restore-keys: |
            ${{ runner.os }}-node-
 
-      - name: "🔧 Setup NodeJS 16.20.1"
+      - name: "🔧 Setup NodeJS 14.20.1"
         uses: actions/setup-node@v3
         with:
-          node-version: 16.20.1
+          node-version: 14.20.1
 
       - name: "🔧 Install npm@latest"
         run: npm i -g npm@latest
 
-      - name: "📦  Install CI dependencies"
-        run: npm run install:ci
+      - name: "📦  Install ReactJS deps"
+        run: bash scripts/frontend/reactjs/install.bash
 
-      - name: "🚀 Create Release"
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "🏗️ Build Project"
+        run: bash scripts/frontend/reactjs/build.bash
+
+      - name: "🚚  Package"
+        run: |
+          bash scripts/deploy/clean.bash
+          bash scripts/deploy/package.bash
+
+      - name: "🚀 Deploy ReactJS to Gh-Pages"
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages-reactjs
+          folder: package/reactjs
+
