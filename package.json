@@ -1,24 +1,25 @@
 {
   "name": "tpl--reactjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "bash scripts/frontend/reactjs/test-ci.bash",
+    "test": "echo 'Error: no test specified'",
     "lint": "echo 'Error: LINTERS not specified'",
     "install:ci": "npm ci --omit=dev --ignore-scripts",
     "install:root": "npm install",
     "prepare": "husky install",
-    "formats:check": "npx prettier --check '**/*.js'"
+    "formats:check": "npx prettier --check '**/*.jsx' '**/*.js'",
+    "formats:fix": "npx prettier --write '**/*.jsx' '**/*.js'"
   },
-  "author": "",
+  "author": "Paul Serban",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
     "@commitlint/config-conventional": "^16.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^7.0.4",
-    "lodash": "^4.17.21"
+    "prettier": "^2.7.1"
   },
   "dependencies": {
     "@semantic-release/changelog": "^6.0.1",
