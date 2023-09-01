@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/paulAlexSerban/tpl--reactjs/compare/v1.0.0...v1.1.0) (2023-09-01)
+
+
+### Features
+
+* **upgrade:** vite + modulize ([10fb0ab](https://github.com/paulAlexSerban/tpl--reactjs/commit/10fb0abbc5e9dac1164a0c32d6bf85849f7774de))
+
 # 1.0.0 (2022-11-19)
 
 
